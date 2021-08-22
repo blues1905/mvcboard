@@ -25,19 +25,20 @@ public class BDao {
 		}
 	}
 	
-	public void write(String bName, String bTitle, String bContent) {
+	public void write(String bName, String bTitle, String bContent, String files) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		
 		try {
 			conn = dataSource.getConnection();
-			String query = "insert into mvc_board(BID, BNAME, BTITLE, BCONTENT, BHIT, BGROUP,BSTEP, BINDENT)"
-					+ "values(mvc_board_seq.nextval, ?, ?, ?, 0, mvc_board_seq.currval, 0, 0)";
+			String query = "insert into mvc_board(BID, BNAME, BTITLE, BCONTENT, BHIT, BGROUP,BSTEP, BINDENT, FILES)"
+					+ "values(mvc_board_seq.nextval, ?, ?, ?, 0, mvc_board_seq.currval, 0, 0, ?)";
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, bName);
 			pstmt.setString(2, bTitle);
 			pstmt.setString(3, bContent);
+			pstmt.setString(4, files);
 			int rn = pstmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -61,7 +62,7 @@ public class BDao {
 		try {
 			conn = dataSource.getConnection();
 			
-			String query = "select BID, BNAME, BTITLE, BCONTENT, BDATE, BHIT, BGROUP, BSTEP, BINDENT FROM MVC_BOARD ORDER BY BGROUP DESC, BSTEP ASC";
+			String query = "select BID, BNAME, BTITLE, BCONTENT, BDATE, BHIT, BGROUP, BSTEP, BINDENT, FILES FROM MVC_BOARD ORDER BY BGROUP DESC, BSTEP ASC";
 			pstmt = conn.prepareStatement(query);
 			rs = pstmt.executeQuery();
 			
@@ -75,8 +76,9 @@ public class BDao {
 				int bGroup = rs.getInt("bGroup");
 				int bStep = rs.getInt("bStep");
 				int bIndent = rs.getInt("bIndent");
+				String files = rs.getString("files");
 				
-				BDto dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent);
+				BDto dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent, files);
 				dtos.add(dto);
 			}
 		} catch (Exception e) {
@@ -119,8 +121,9 @@ public class BDao {
 				int bGroup = rs.getInt("bHit");
 				int bStep = rs.getInt("bStep");
 				int bIndent = rs.getInt("bIndent");
+				String files = rs.getString("files");
 				
-				dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent);
+				dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent, files);
 				
 			}
 		} catch(Exception e) {
@@ -209,8 +212,9 @@ public class BDao {
 				int bGroup = resultSet.getInt("bGroup");
 				int bStep = resultSet.getInt("bStep");
 				int bIndent = resultSet.getInt("bIndent");
+				String files = resultSet.getString("files");
 				
-				dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent);
+				dto = new BDto(bId, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent, files);
 			}
 			
 		} catch (Exception e) {

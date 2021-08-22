@@ -49,12 +49,15 @@ public class BController extends HttpServlet{
 		actionDo(request,response);
 		
 		Collection<Part> parts = request.getParts();
-		
+		StringBuilder builder = new StringBuilder();
 		for(Part p : parts) {
 			if(!p.getName().equals("file")) continue;
 			
 			Part filePart = p;
 			String fileName = filePart.getSubmittedFileName();
+			builder.append(fileName);
+			builder.append(",");
+			
 			InputStream fis = filePart.getInputStream();
 			
 			String realPath = request.getServletContext().getRealPath("/upload");
@@ -72,6 +75,9 @@ public class BController extends HttpServlet{
 			fis.close();
 		
 		}
+		
+		builder.delete(builder.length()-1, builder.length());
+		
 	}
 	
 	private void actionDo(HttpServletRequest request, 

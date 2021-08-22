@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.io.File" %>
+<%
+	String savePath = "/upload"; 
+	ServletContext context = getServletContext(); 
+	String uploadFilePath = context.getRealPath(savePath);
+	File uploadDir = new File(uploadFilePath);
+	String[] fileList = uploadDir.list();
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -33,6 +41,12 @@
 			</tr>
 			<tr >
 				<td colspan="2"> <input type="submit" value="수정"> &nbsp;&nbsp; <a href="list.do">목록보기</a> &nbsp;&nbsp; <a href="delete.do?bId=${content_view.bId}">삭제</a> &nbsp;&nbsp; <a href="reply_view.do?bId=${content_view.bId}">답변</a></td>
+			</tr>
+			<tr>
+				<th>파일목록</th>
+				<td><% for(int i = 0; i < fileList.length; i++) {%>
+					<li><a href="<%= request.getContextPath()%>/upload<%= fileList[i] %>" download><%= fileList[i] %></a></li>"
+				<% } %></td>
 			</tr>
 		</form>
 	</table>

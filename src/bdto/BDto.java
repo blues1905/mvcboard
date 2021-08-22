@@ -13,11 +13,12 @@ public class BDto {
 	int bGroup;
 	int bStep;
 	int bIndent;
+	String files;
 
 	public BDto() {}
 	
 	public BDto(int bId, String bName, String bTitle, String bContent, Timestamp bDate, int bHit, int bGroup, int bStep,
-			int bIndent) {
+			int bIndent, String files) {
 		super();
 		this.bId = bId;
 		this.bName = bName;
@@ -28,6 +29,7 @@ public class BDto {
 		this.bGroup = bGroup;
 		this.bStep = bStep;
 		this.bIndent = bIndent;
+		this.files = files;
 	}
 	public int getbId() {
 		return bId;
@@ -82,6 +84,19 @@ public class BDto {
 	}
 	public void setbIndent(int bIndent) {
 		this.bIndent = bIndent;
+	}
+	public String getFiles() {
+		return files;
+	}
+	public void setFiles(String files) {
+		this.files = files;
+	}
+
+	@Override
+	public String toString() {
+		return "BDto [bId=" + bId + ", bName=" + bName + ", bTitle=" + bTitle + ", bContent=" + bContent + ", bDate="
+				+ bDate + ", bHit=" + bHit + ", bGroup=" + bGroup + ", bStep=" + bStep + ", bIndent=" + bIndent
+				+ ", files=" + files + "]";
 	}
 	
 	
